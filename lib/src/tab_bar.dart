@@ -222,11 +222,22 @@ class _SegmentedTabControlState extends State<_SegmentedTabControl>
   }
 
   @override
-  void didUpdateWidget(_SegmentedTabControl oldWidget) {
+  void didUpdateWidget(covariant _SegmentedTabControl oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.controller != oldWidget.controller) {
+
+    final didControllerChange = widget.controller != oldWidget.controller;
+    final didMaxWidthChange = widget.maxWidth != oldWidget.maxWidth;
+
+    if (didMaxWidthChange) {
+      _maxWidth = widget.maxWidth;
+    }
+
+    if (didControllerChange || didMaxWidthChange) {
       _calculateTotalFlex();
       _calculateFlexFactors();
+    }
+
+    if (didControllerChange) {
       _updateTabController();
     }
   }
